@@ -567,5 +567,12 @@
   "Введите целое число от": "Enter a whole number from",
   "Введите сумму от": "Enter an amount from",
   "не больше двух знаков после запятой": "up to two decimal places",
-  "Длина текста:": "Text length:"
+  "Длина текста:": "Text length:",
+  "зарегистрированных": "registered",
+  "кейсов в каталоге": "cases in catalog",
+  "Обращения:": "Tickets:",
+  "открытых": "open",
+  "Вес": "Weight",
+  "НАЧАТЬ ЗА": "START FOR",
+  "предметов добавлены в ваш инвентарь": "items added to your inventory"
 }
