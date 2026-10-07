@@ -351,8 +351,13 @@ function CasePage({ box, data, act, fast, audio, onAnimating, onBack, }: {
         };
     }[]>([]), [busy, setBusy] = useState(false), [finished, setFinished] = useState(0), [round, setRound] = useState(0), [sold, setSold] = useState(false), [soldItems, setSoldItems] = useState<string[]>([]), [showOdds, setShowOdds] = useState(false), [quickOpen, setQuickOpen] = useState(false);
     const pool = clientContents(box, data);
+    const priceCents = Math.round(box.price * 100);
+    const balanceCents = Math.round(data.player.state.balance * 100);
+    const affordableCount = priceCents === 0 ? 1 : Math.max(0, Math.min(10, Math.floor(balanceCents / priceCents)));
+    const selectedCount = Math.min(count, Math.max(1, affordableCount));
+    useEffect(() => { setCount(current => Math.min(current, Math.max(1, affordableCount))); }, [affordableCount]);
     async function open(quick = false) {
-        if (busy)
+        if (busy || affordableCount === 0)
             return;
         setBusy(true);
         onAnimating(true);
@@ -361,7 +366,7 @@ function CasePage({ box, data, act, fast, audio, onAnimating, onBack, }: {
         setQuickOpen(quick || fast);
         setFinished(0);
         try {
-            const result = await act("open", { caseId: box.id, count });
+            const result = await act("open", { caseId: box.id, count: selectedCount });
             setRound((r) => r + 1);
             setDrops(result.result.drops);
         }
@@ -399,25 +404,27 @@ function CasePage({ box, data, act, fast, audio, onAnimating, onBack, }: {
         {!drops.length ? (<div className="case-showcase">
             <NeonRing />
             <CaseArt box={box}/>
-          </div>) : (<div className={`reels ${drops.length > 3 ? "compact-reels" : ""}`} style={{ gridTemplateColumns: `repeat(${Math.min(drops.length, 5)}, minmax(0, 1fr))`, maxWidth: drops.length > 3 ? "1094px" : "814px" }}>
+          </div>) : (<div className={`reels ${drops.length > 3 ? "compact-reels" : ""}`} style={{ "--reel-columns": Math.min(drops.length, 5), maxWidth: drops.length > 3 ? "1094px" : "814px" } as React.CSSProperties}>
             {drops.map((drop, i) => (<Roulette key={`${round}-${i}`} pool={pool.map((x) => x.skin)} winner={drop.skin} duration={quickOpen ? 0 : 6100} audio={audio && i === 0} onFinish={finish} onSell={drops.length > 1 ? () => sell(drop.item.uid) : undefined} sold={soldItems.includes(drop.item.uid)}/>))}
           </div>)}
       </div>
       {!drops.length || busy ? (<>
           {!busy && <div className="open-count">
+            {affordableCount > 0 ? <>
             <span>{t("Открыть")}</span>
-            {Array.from({ length: box.price === 0 ? 1 : 10 }, (_, i) => (<button key={i} disabled={busy} className={count === i + 1 ? "active" : ""} onClick={() => setCount(i + 1)}>
+            {Array.from({ length: affordableCount }, (_, i) => (<button key={i} disabled={busy} className={selectedCount === i + 1 ? "active" : ""} onClick={() => setCount(i + 1)}>
                 {i + 1}
               </button>))}
             <span>{t("раз")}</span>
+            </> : <span role="status">{t("Недостаточно средств")}</span>}
           </div>}
           <div className="action-row">
-            <button className="outlined" disabled={busy || data.player.state.balance < box.price * count} onClick={() => open()}>
+            <button className="outlined" disabled={busy || affordableCount === 0} onClick={() => open()}>
               <Box size={15}/>
-              {t(`ОТКРЫТЬ ЗА ${coins(box.price * count)} ©`)}
+              {t(`ОТКРЫТЬ ЗА ${coins(box.price * selectedCount)} ©`)}
             </button>
-            <button className="outlined" disabled={busy || data.player.state.balance < box.price * count} onClick={() => open(true)}>
-              <Sparkles size={15}/>{t("БЫСТРО ЗА")}{coins(box.price * count)} ©
+            <button className="outlined" disabled={busy || affordableCount === 0} onClick={() => open(true)}>
+              <Sparkles size={15}/>{t("БЫСТРО ЗА")}{coins(box.price * selectedCount)} ©
             </button>
           </div>
         </>) : (<div className="action-row result-actions">

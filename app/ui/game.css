@@ -761,11 +761,14 @@
 
   max-width: 814px;
 
-  display: grid;
-  flex-direction: column;
-
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 6px;
-  grid-template-columns: repeat(3,minmax(0,1fr));
+}
+.reels > .roulette {
+  flex: 0 0 calc((100% - (var(--reel-columns, 3) - 1) * 6px) / var(--reel-columns, 3));
+  min-width: 0;
 }
 .roulette {
   height: 175px;
