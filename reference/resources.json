@@ -1,0 +1,422 @@
+[
+  {
+    "id": "ffb8bb003f0c7565",
+    "kind": "other",
+    "name": "settings.json",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/settings.json"
+  },
+  {
+    "id": "d17389f93a4894e8",
+    "kind": "other",
+    "name": "catalog.bin",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/catalog.bin"
+  },
+  {
+    "id": "46acd3aa4f16afe3",
+    "kind": "other",
+    "name": "packedassets_assets_all_f237ec3019ab973ce2e588f9d789eee2.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/packedassets_assets_all_f237ec3019ab973ce2e588f9d789eee2.bundle"
+  },
+  {
+    "id": "2724e542c7cb7673",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_05_a30c9a7815bcc78a2d9f57eb7196fee3.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_05_a30c9a7815bcc78a2d9f57eb7196fee3.bundle"
+  },
+  {
+    "id": "b4aa59221db5f272",
+    "kind": "other",
+    "name": "defaultlocalgroup_assets_all_a622c6bf0fa60b5a8286934e6fd3b41a.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/defaultlocalgroup_assets_all_a622c6bf0fa60b5a8286934e6fd3b41a.bundle"
+  },
+  {
+    "id": "a0500771f201aa4e",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_14_ba93d35b3f8bafa48454991221913455.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_14_ba93d35b3f8bafa48454991221913455.bundle"
+  },
+  {
+    "id": "cb282d075f9c9eb2",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_12_c9fe402867de8d848a5d9197dbaaaa5e.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_12_c9fe402867de8d848a5d9197dbaaaa5e.bundle"
+  },
+  {
+    "id": "29c3e74d4854dc35",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_15_31b0d01976394067e0b6274c1484ca47.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_15_31b0d01976394067e0b6274c1484ca47.bundle"
+  },
+  {
+    "id": "bce67bfc7521b33d",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_06_33053a130a1ae28400de5c1168784650.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_06_33053a130a1ae28400de5c1168784650.bundle"
+  },
+  {
+    "id": "0794e426dbc5d1bf",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_00_31b41255534d9d7fddbf181f2574756b.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_00_31b41255534d9d7fddbf181f2574756b.bundle"
+  },
+  {
+    "id": "d8cf556ab7fe165a",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_10_21485171f2e4f0ccc0451a0f132d1f3e.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_10_21485171f2e4f0ccc0451a0f132d1f3e.bundle"
+  },
+  {
+    "id": "16a4e88f2c88b180",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_03_c3006421cab8b330d31e1bc6d8c78fba.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_03_c3006421cab8b330d31e1bc6d8c78fba.bundle"
+  },
+  {
+    "id": "2303d0b97d13317c",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_07_bb9a8a8ec9d8e7d3d2c156af69de755e.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_07_bb9a8a8ec9d8e7d3d2c156af69de755e.bundle"
+  },
+  {
+    "id": "6ac57272daf5570e",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_29_37a32592d76567457b614c05a7bb6417.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_29_37a32592d76567457b614c05a7bb6417.bundle"
+  },
+  {
+    "id": "3e39d564dc512b32",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_16_2a3c593329b9953d51f8b86587386881.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_16_2a3c593329b9953d51f8b86587386881.bundle"
+  },
+  {
+    "id": "a903bd79128b61f1",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_27_73bd74bb6b8d25d1253750399debef1a.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_27_73bd74bb6b8d25d1253750399debef1a.bundle"
+  },
+  {
+    "id": "437c53d71b563b9d",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_04_f3ed05bda0353a1ddbefce5389fefc82.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_04_f3ed05bda0353a1ddbefce5389fefc82.bundle"
+  },
+  {
+    "id": "e254b4c4238ecb69",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_18_b6f678c324b501f686386000942563d5.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_18_b6f678c324b501f686386000942563d5.bundle"
+  },
+  {
+    "id": "1baa1750e4745460",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_30_9c933808e134ff2cf46fbbf1d07b0987.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_30_9c933808e134ff2cf46fbbf1d07b0987.bundle"
+  },
+  {
+    "id": "f744f46b8cf13c4c",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_26_7bb0f80df8e378f837887b419e548ac2.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_26_7bb0f80df8e378f837887b419e548ac2.bundle"
+  },
+  {
+    "id": "c3e5c81a0520b223",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_09_a27cd3601f6180b6722ce7f150b9ad73.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_09_a27cd3601f6180b6722ce7f150b9ad73.bundle"
+  },
+  {
+    "id": "bfa7a0bdb87cbf65",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_19_98c2dd5aec835d2427fbfa418f8828b3.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_19_98c2dd5aec835d2427fbfa418f8828b3.bundle"
+  },
+  {
+    "id": "70409af9e137c3ee",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_21_15aae33de04dfca84534db6baa6e1890.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_21_15aae33de04dfca84534db6baa6e1890.bundle"
+  },
+  {
+    "id": "ff78955b17c56036",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_28_67ff3454ebecadc6d6e0d1f681070c23.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_28_67ff3454ebecadc6d6e0d1f681070c23.bundle"
+  },
+  {
+    "id": "cb9a4132bd982544",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_22_7697d323d68317660d47ed126260169a.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_22_7697d323d68317660d47ed126260169a.bundle"
+  },
+  {
+    "id": "6791a1bd0899f9b9",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_17_eacd729ec928f0ef8388eb7fa5f784dd.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_17_eacd729ec928f0ef8388eb7fa5f784dd.bundle"
+  },
+  {
+    "id": "80868e7df3b279c8",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_13_2038c94e18d647c2a797e83482133fc4.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_13_2038c94e18d647c2a797e83482133fc4.bundle"
+  },
+  {
+    "id": "cecc0f5cf6648459",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_11_3c2f2287b4b978e1d618d44700becb6e.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_11_3c2f2287b4b978e1d618d44700becb6e.bundle"
+  },
+  {
+    "id": "68d9bb571cc8ed8c",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_25_6c35799370633324f6fb9448e936780e.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_25_6c35799370633324f6fb9448e936780e.bundle"
+  },
+  {
+    "id": "26e28c1ecd8e7f2b",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_20_6331a39f5d057e833f7a1f7a41fd5358.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_20_6331a39f5d057e833f7a1f7a41fd5358.bundle"
+  },
+  {
+    "id": "5172856d8b876e77",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_08_e79ccb65d2c3e5687ca4cc00e3b07375.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_08_e79ccb65d2c3e5687ca4cc00e3b07375.bundle"
+  },
+  {
+    "id": "2f2fe0df082fdf06",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_02_70ee69fd291f93821b1fe5a64e703d1f.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_02_70ee69fd291f93821b1fe5a64e703d1f.bundle"
+  },
+  {
+    "id": "a5683ef7647e9e61",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_23_93b77a8ab50ad90043f2a511cc84b51c.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_23_93b77a8ab50ad90043f2a511cc84b51c.bundle"
+  },
+  {
+    "id": "8b05612661967d13",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_24_167365e472c575e8db9a1b3feb94b921.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_24_167365e472c575e8db9a1b3feb94b921.bundle"
+  },
+  {
+    "id": "7e39713c3a904b62",
+    "kind": "other",
+    "name": "atlas_skins_assets_skins_atlas_01_9491f39f650421008656d9c88d069254.bundle",
+    "sources": [
+      {
+        "kind": "resource",
+        "property": "fetch"
+      }
+    ],
+    "url": "https://app-612721.cdn.games.yandex.net/612721/0gsj9bj1zin1mu3ji73xdukgvd3agg9c_brotli/StreamingAssets/aa/WebGL/atlas_skins_assets_skins_atlas_01_9491f39f650421008656d9c88d069254.bundle"
+  }
+]

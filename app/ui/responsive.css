@@ -1,0 +1,162 @@
+@media (max-width: 1200px) {
+  .admin-shell {
+    --admin-sidebar: 210px;
+  }
+  .admin-main {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .admin-stat-grid {
+    gap: 12px;
+  }
+  .admin-stat {
+    padding: 16px;
+  }
+  .admin-stat > strong {
+    font-size: 25px;
+  }
+  .admin-case-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 980px) {
+  .admin-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .admin-overview {
+    grid-template-columns: 1fr;
+  }
+  .admin-case-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .admin-header-right > .status-dot {
+    display: none;
+  }
+  .admin-header-right {
+    font-size: 0;
+  }
+  .admin-header-right .secondary {
+    font-size: 10px;
+  }
+  .admin-main table {
+    font-size: 10px;
+  }
+  .admin-main td,
+  .admin-main th {
+    padding: 10px;
+  }
+}
+@media (max-width: 760px) {
+  .admin-shell {
+    --admin-sidebar: 0px;
+  }
+  .admin-sidebar {
+    width: 230px;
+    transform: translateX(-100%);
+    transition: transform 0.2s;
+    box-shadow: 20px 0 40px #0006;
+  }
+  .admin-sidebar.expanded {
+    transform: translateX(0);
+  }
+  .admin-main {
+    margin-left: 0;
+    padding: 0 16px 35px;
+  }
+  .admin-header {
+    padding: 20px 0;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .admin-header > div:first-of-type {
+    flex: 1;
+  }
+  .admin-header h1 {
+    font-size: 21px;
+  }
+  .admin-header > div:first-of-type > span {
+    font-size: 7px;
+  }
+  .admin-header-right {
+    gap: 10px;
+  }
+  .admin-header-right .avatar {
+    display: none;
+  }
+  .admin-stat-grid {
+    gap: 10px;
+  }
+  .admin-stat {
+    padding: 14px;
+  }
+  .admin-stat > div {
+    font-size: 9px;
+  }
+  .admin-stat > div svg {
+    width: 16px;
+  }
+  .admin-stat > strong {
+    font-size: 23px;
+    margin: 15px 0 9px;
+  }
+  .admin-stat > small {
+    font-size: 8px;
+  }
+  .admin-overview {
+    gap: 15px;
+  }
+  .admin-toolbar {
+    gap: 10px;
+  }
+  .admin-toolbar > .search-field {
+    max-width: none;
+    min-width: 0;
+    flex-basis: 100%;
+  }
+  .admin-toolbar select {
+    font-size: 11px;
+    padding: 8px;
+  }
+  .admin-toolbar > .primary,
+  .admin-toolbar > .secondary {
+    font-size: 10px;
+    min-height: 33px;
+    padding: 6px 10px;
+  }
+  .admin-toolbar > span {
+    font-size: 10px;
+  }
+  .admin-case-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .admin-case {
+    padding: 12px;
+  }
+  .admin-case > strong {
+    font-size: 12px;
+  }
+  .admin-case > small {
+    font-size: 8px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .admin-case .badge {
+    font-size: 7px;
+    padding: 3px;
+  }
+  .admin-case b {
+    font-size: 9px;
+  }
+  .admin-case .secondary {
+    font-size: 9px;
+  }
+  .admin-main td input {
+    width: 85px;
+    font-size: 10px;
+    padding: 6px;
+  }
+}
