@@ -38,7 +38,7 @@ export function Upgrade({ data, act, audio, fast, onAnimating }: ModeProps) {
     const [targetOrder, setTargetOrder] = useState("price");
     const value = used.reduce((sum, i) => sum + i.price, 0) + extra, chance = outcome?.chance ??
         (target
-            ? chanceForUpgrade(value, target.price, data.settings.upgradeFee)
+            ? chanceForUpgrade(value, target.price, data.settings.upgradeFee, data.player.state.odds?.upgradeBonus)
             : 0);
     const [displayedChance, setDisplayedChance] = useState(0);
     const chanceRef = useRef(0);
@@ -205,7 +205,7 @@ export function Upgrade({ data, act, audio, fast, onAnimating }: ModeProps) {
           {[2, 5, 10].map((n) => (<button disabled={!value || busy || finished} key={n} onClick={() => multiplier(n)}>
               x{n}
             </button>))}
-          {[30, 50, 75].map((n) => (<button disabled={!value || busy || finished} key={n} onClick={() => multiplier((100 - data.settings.upgradeFee) / n)}>
+          {[30, 50, 75].map((n) => (<button disabled={!value || busy || finished || n - (data.player.state.odds?.upgradeBonus ?? 0) <= 0 || n - (data.player.state.odds?.upgradeBonus ?? 0) > 75} key={n} onClick={() => multiplier((100 - data.settings.upgradeFee) / (n - (data.player.state.odds?.upgradeBonus ?? 0)))}>
               {n}%
             </button>))}
         </div>

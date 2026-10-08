@@ -129,7 +129,25 @@ export default function Game() {
         return () => removeEventListener("hashchange", sync);
     }, [data?.cases]);
     const notify = (message: string) => setToast(message);
-    const updatePlayer = (player: Player) => setData((previous) => (previous ? { ...previous, player } : previous));
+    const updatePlayer = useCallback((player: Player) => setData(previous => {
+        if (!previous || (player.id === previous.player.id && (player.version ?? 0) < (previous.player.version ?? 0))) return previous;
+        return { ...previous, player };
+    }), []);
+    const refreshPaused = pending || animating || farmBalance !== null;
+    useEffect(() => {
+        if (!rawData || refreshPaused) return;
+        let mounted = true;
+        const refresh = async () => {
+            if (document.hidden) return;
+            try {
+                const response = await api<{ player: Player }>("player");
+                if (mounted) updatePlayer(response.player);
+            } catch { }
+        };
+        const timer = setInterval(refresh, 10000);
+        window.addEventListener("focus", refresh);
+        return () => { mounted = false; clearInterval(timer); window.removeEventListener("focus", refresh); };
+    }, [rawData?.player.id, refreshPaused, updatePlayer]);
     const act: GameAction = async (path, body) => {
         setPending(true);
         try {

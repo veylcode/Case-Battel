@@ -6,7 +6,7 @@ import {
   publicContents,
   defaults,
 } from "../../domain/catalog";
-import type { Case, Settings, PlayerState } from "../../domain/types";
+import type { Case, Settings, PlayerState, PlayerOdds, Rarity } from "../../domain/types";
 import {
   database,
   session,
@@ -39,8 +39,8 @@ import {
 
 export const dynamic = "force-dynamic";
 const random = () => crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296;
-function selectDrop(box: Case, settings: Settings) {
-  const pool = contents(box, settings);
+function selectDrop(box: Case, settings: Settings, odds?: PlayerOdds) {
+  const pool = contents(box, settings, odds);
   const total = pool.reduce((sum, x) => sum + x.weight, 0);
   let cursor = random() * total;
   for (const entry of pool) {
@@ -156,7 +156,7 @@ async function handle(request: Request) {
       const id = new URL(request.url).searchParams.get("case");
       const box = configuredCases(settings).find((c) => c.id === id);
       if (!box) throw new ApiError("Кейс не найден", 404);
-      return response(contents(box, settings));
+      return response(contents(box, settings, playerSession ? (await getPlayer(playerSession.user_id)).state.odds : undefined));
     }
     if (path === "leaderboard" && !post) {
       return response(
@@ -310,6 +310,17 @@ async function handle(request: Request) {
             },
             true,
           );
+        } else if (action === "odds") {
+          if (!body.odds || typeof body.odds !== "object" || !body.odds.rarityWeights)
+            throw new ApiError("Некорректные настройки шансов");
+          const odds: PlayerOdds = {
+            caseLuck: moneyValue(body.odds.caseLuck, .1, 10),
+            upgradeBonus: moneyValue(body.odds.upgradeBonus, -100, 100),
+            rarityWeights: {} as Record<Rarity, number>,
+          };
+          for (const rarity of ["blue", "purple", "pink", "red", "gold"] as const)
+            odds.rarityWeights[rarity] = moneyValue(body.odds.rarityWeights[rarity], .01, 100);
+          changed = await mutatePlayer(id, state => { state.odds = odds; return odds; }, true);
         } else if (action === "ban") {
           if (typeof body.banned !== "boolean")
             throw new ApiError("Некорректный статус");
@@ -464,6 +475,7 @@ async function handle(request: Request) {
     if (!playerSession)
       throw new ApiError("Обновите страницу или войдите в аккаунт", 401);
     const playerId = playerSession.user_id;
+    if (path === "player" && !post) return response({ player: await getPlayer(playerId) });
     if (path === "tickets" && !post)
       return response(
         (
@@ -515,7 +527,7 @@ async function handle(request: Request) {
           state.freeAt = Date.now();
         }
         const drops = Array.from({ length: count }, () => {
-          const skin = selectDrop(box, settings);
+          const skin = selectDrop(box, settings, state.odds);
           return { skin, item: addItem(state, skin.id, skin.price) };
         });
         history(
@@ -568,6 +580,7 @@ async function handle(request: Request) {
           value,
           target.price,
           settings.upgradeFee,
+          state.odds?.upgradeBonus,
         );
         const roll = random() * 100;
         const won = roll < chance;
@@ -666,7 +679,7 @@ async function handle(request: Request) {
         const cost = box.price * rounds;
         if (state.balance < cost) throw new ApiError("Недостаточно монет");
         const own = Array.from({ length: rounds }, () =>
-          selectDrop(box, settings),
+          selectDrop(box, settings, state.odds),
         );
         const bot = Array.from({ length: rounds }, () =>
           selectDrop(box, settings),

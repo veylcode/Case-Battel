@@ -38,7 +38,13 @@ export interface HistoryEntry {
   time: number;
   items?: string[];
 }
+export interface PlayerOdds {
+  caseLuck: number;
+  upgradeBonus: number;
+  rarityWeights: Record<Rarity, number>;
+}
 export interface PlayerState {
+  odds?: PlayerOdds;
   balance: number;
   inventory: Item[];
   history: HistoryEntry[];

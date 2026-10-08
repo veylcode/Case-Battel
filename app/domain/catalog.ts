@@ -1,7 +1,8 @@
 import skinData from "./skin-catalog.json";
 import caseData from "./case-catalog.json";
 import dropData from "./case-content.json";
-import type { Skin, Case, Settings, CaseContent } from "./types";
+import type { Skin, Case, Settings, CaseContent, PlayerOdds } from "./types";
+import { personalWeight } from "./rules";
 export { rarityColors, chanceForUpgrade } from "./rules";
 
 export const skins = (skinData as Skin[]).filter((s) => !s.supplemental);
@@ -69,7 +70,7 @@ export function configuredCases(settings: Settings): Case[] {
     ) as Case[]),
   ];
 }
-export function contents(box: Case, settings: Settings): CaseContent[] {
+export function contents(box: Case, settings: Settings, odds?: PlayerOdds): CaseContent[] {
   const entries = originalDrops[box.id] ?? originalDrops[cases[0].id] ?? [];
   const combined = new Map<string, { skin: Skin; weight: number }>();
   for (const entry of entries) {
@@ -91,7 +92,9 @@ export function contents(box: Case, settings: Settings): CaseContent[] {
         existing.weight += weight;
     } else combined.set(skin.id, { skin, weight });
   }
-  const weighted = Array.from(combined.values());
+  const weighted = Array.from(combined.values()).map(entry => ({ ...entry,
+    weight: personalWeight(entry.weight, entry.skin.price, entry.skin.rarity, box.price, odds),
+  }));
   const total = weighted.reduce((sum, x) => sum + x.weight, 0);
   return weighted.map((x) => ({ ...x, chance: (100 * x.weight) / total }));
 }

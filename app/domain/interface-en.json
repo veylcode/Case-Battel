@@ -583,5 +583,13 @@
   "Сортировка целей": "Target sorting",
   "Мои предметы": "My items",
   "Пользователей онлайн": "Users online",
-  "CASE BATTLE, главная": "CASE BATTLE, home"
+  "CASE BATTLE, главная": "CASE BATTLE, home",
+  "Персональные шансы": "Personal odds",
+  "Удача во всех кейсах": "Luck in all cases",
+  "1 — обычные шансы. Больше 1 повышает вероятность дорогих предметов, меньше 1 — дешёвых.": "1 means normal odds. Above 1 favors expensive items; below 1 favors cheaper items.",
+  "Синие": "Blue", "Фиолетовые": "Purple", "Розовые": "Pink", "Красные": "Red", "Золотые": "Gold",
+  "Вес синих": "Blue weight", "Вес фиолетовых": "Purple weight", "Вес розовых": "Pink weight", "Вес красных": "Red weight", "Вес золотых": "Gold weight",
+  "Поправка шанса апгрейда, п.п.": "Upgrade chance adjustment, percentage points",
+  "Добавляется к обычному проценту. Итог ограничен 0–100% и показан в апгрейдере. Настройки применяются только к этому игроку.": "Added to the normal percentage. The result is limited to 0–100% and displayed in the upgrader. Settings apply only to this player.",
+  "Сохранить шансы": "Save odds", "Сбросить шансы": "Reset odds"
 }

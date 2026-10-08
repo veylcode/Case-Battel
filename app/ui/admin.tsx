@@ -5,6 +5,7 @@ import { Shield, Users, Box, SlidersHorizontal, Gift, Coins, ScrollText, LifeBuo
 import type { Case, Player, Settings, Skin, Bootstrap } from "../domain/types";
 import { clientContents } from "../domain/rules";
 import { api, coins, CaseArt, SkinCard, Modal, Empty } from "./shared";
+import { PlayerOddsForm } from "./player-odds";
 interface AdminData {
     users: Player[];
     logs: any[];
@@ -428,6 +429,8 @@ function UserManagement({ data, busy, request }: AdminProps) {
                 skinId,
             }).catch(() => { })}>
             <Plus size={16}/>{t("Выдать предмет")}</button>
+          <hr />
+          <PlayerOddsForm player={player} busy={busy} save={body => request("admin/user", body)}/>
           <hr />
           <button className={`secondary wide ${player.banned ? "" : "danger"}`} disabled={busy} onClick={() => void request("admin/user", {
                 id: player.id,
