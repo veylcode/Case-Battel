@@ -10,6 +10,7 @@
   .topbar .main-nav { order: 3; width: 100%; height: 51px; justify-content: space-between; }
   .main-nav button { flex: 1; min-width: 0; padding: 3px 2px; font-size: 8px; }
   .game-shell .main-content { padding: 0 8px 24px; min-width: 0; }
+  .game-shell .main-content > section { max-width: 100%; }
   .drop-sidebar .feed-item { height: 64px; padding-inline: 1px; }
   .feed-item img { width: 46px; height: 38px; }
   .feed-item span, .feed-item strong { font-size: 6px; line-height: 8px; }
@@ -69,6 +70,7 @@
   .game-shell .modal { max-width: calc(100vw - 24px); padding: 20px 16px; }
   .game-shell input, .game-shell select, .game-shell textarea { font-size: 16px; }
   .game-shell table { display: block; max-width: 100%; overflow-x: auto; }
+  .game-shell .farm-page { width: 100%; }
   .farm-hold { max-width: 100%; }
 }
 @media (max-width: 380px) {
