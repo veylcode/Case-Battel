@@ -74,7 +74,10 @@ export default function Game() {
     const [farmBalance, setFarmBalance] = useState<number | null>(null);
     const [viewportScale, setViewportScale] = useState(1);
     useEffect(() => {
-        const resize = () => setViewportScale(Math.min(1, document.documentElement.clientWidth / 1280));
+        const resize = () => {
+            const width = document.documentElement.clientWidth;
+            setViewportScale(width <= 760 ? 1 : Math.min(1, width / 1280));
+        };
         resize();
         addEventListener("resize", resize);
         return () => removeEventListener("resize", resize);

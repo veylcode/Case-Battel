@@ -1,0 +1,11 @@
+[Unit]
+Description=Check GitHub for Case-Battel updates every two minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitInactiveSec=2min
+Persistent=true
+Unit=case-battel-update.service
+
+[Install]
+WantedBy=timers.target

@@ -575,5 +575,11 @@
   "Вес": "Weight",
   "НАЧАТЬ ЗА": "START FOR",
   "предметов добавлены в ваш инвентарь": "items added to your inventory",
-  "Недостаточно средств": "Insufficient funds"
+  "Недостаточно средств": "Insufficient funds",
+  "очень высокий шанс": "very high chance",
+  "высокий шанс": "high chance",
+  "средний шанс": "medium chance",
+  "низкий шанс": "low chance",
+  "Сортировка целей": "Target sorting",
+  "Мои предметы": "My items"
 }

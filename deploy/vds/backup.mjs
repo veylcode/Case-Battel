@@ -1,0 +1,12 @@
+import { DatabaseSync, backup } from 'node:sqlite';
+import { mkdirSync, readdirSync, unlinkSync } from 'node:fs';
+import path from 'node:path';
+const directory = process.env.BACKUP_PATH ?? '/var/backups/case-battel';
+mkdirSync(directory, { recursive: true });
+const database = new DatabaseSync(process.env.DATABASE_PATH);
+const filename = `case-battel-${new Date().toISOString().replaceAll(':', '-')}.sqlite`;
+await backup(database, path.join(directory, filename));
+database.close();
+const copies = readdirSync(directory).filter(name => /^case-battel-.*\.sqlite$/.test(name)).sort();
+for (const name of copies.slice(0, -14)) unlinkSync(path.join(directory, name));
+console.log('Database backup saved:', filename);

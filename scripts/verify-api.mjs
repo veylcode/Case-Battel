@@ -11,7 +11,7 @@ if(process.stdin.isTTY) process.stdin.setRawMode(false);
 process.stdin.pause();
 const {password} = JSON.parse(line);
 fs.mkdirSync('work',{recursive:true});
-const base = 'http://127.0.0.1:5173';
+const base = process.env.TEST_BASE_URL ?? 'http://127.0.0.1:5173';
 function client() {
   const jar = new Map();
   return async (path, body, headers = {}) => {
@@ -66,7 +66,7 @@ await ok('Holding farm uses elapsed time and concurrent ticks do not double cred
   const stopped=await expect(player('farm/tick',{stop:true}));
   const credited=stopped.player.state.balance-before;
   const elapsed=Date.now()-started.player.state.farmHoldAt;
-  assert(credited>0&&credited<=elapsed*originalSettings.farmReward*.8/1000+.03);
+  assert(credited>0&&credited<=elapsed*originalSettings.farmReward*.8/1000+.03, JSON.stringify({credited,elapsed,rate:originalSettings.farmReward}));
   await expect(player('farm/tick',{}),400);
   state=stopped.player.state;
 });

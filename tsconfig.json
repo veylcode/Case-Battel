@@ -41,6 +41,9 @@
     "**/*.mts"
   ],
   "exclude": [
+    "work",
+    "dist",
+    "dist-vds",
     "node_modules",
     "examples"
   ]

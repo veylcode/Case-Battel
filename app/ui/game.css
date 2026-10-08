@@ -1850,3 +1850,28 @@
 .target-price-search input { width: 56px; height: 24px; padding: 3px; font-size: 10px; background: #11151d; border: 1px solid #353637; border-radius: 0; }
 .target-price-search button { border: 0; background: none; padding: 2px; color: #656d7d; }
 .target-name-search { margin-bottom: 6px; }
+.upgrade-page .upgrade-arena, .upgrade-page .upgrade-controls, .upgrade-page .two-panels { max-width: 940px; }
+.upgrade-page .upgrade-arena, .upgrade-page .upgrade-controls { grid-template-columns: minmax(0, 1fr) 280px minmax(0, 1fr); gap: 16px; }
+.upgrade-source, .upgrade-target { min-height: 234px; background: #11161c99; }
+.upgrade-page .arena-label { padding: 5px 8px; line-height: 16px; }
+.upgrade-selected-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 3px 5px 5px; }
+.upgrade-selected-grid .skin-main { height: 94px; padding: 4px; }
+.upgrade-selected-grid .skin-main img { height: 58px; margin: 8px 0 0; }
+.upgrade-selected-grid .weapon-name, .upgrade-selected-grid .skin-main strong { font-size: 8px; line-height: 10px; }
+.upgrade-selected-grid .skin-price { font-size: 8px; right: 4px; top: 3px; }
+.upgrade-target .target-weapon { height: 160px; padding: 0 12px; }
+.upgrade-target .arena-item-caption { height: 47px; padding: 5px 10px; }
+.upgrade-target .arena-item-caption span { white-space: normal; font-size: 13px; line-height: 17px; }
+.upgrade-target .arena-item-caption small { display: block; font-size: 11px; color: #828690; }
+.upgrade-dial { width: 230px; height: 230px; }
+.dial-ring { inset: 20px; mask: radial-gradient(transparent 60%, #000 62%, #000 69%, transparent 71%); filter: drop-shadow(0 0 5px #7de32b88); }
+.dial-inner { inset: 55px; }
+.dial-inner strong { font-size: 27px; }
+.dial-pointer { inset: 18px; }
+.upgrade-page .upgrade-button { width: 195px; min-height: 38px; background: #ffb75d; color: white; border: 0; border-radius: 10px; }
+.upgrade-page .collection-panel { background: #15191c; }
+.upgrade-page .collection-panel h2 { font-size: 14px; color: #5e6d82; }
+.upgrade-page .collection-panel h2 > img { width: 27px; height: 22px; object-fit: contain; opacity: .6; }
+.upgrade-page .small-grid .skin-main { height: 84px; }
+.upgrade-page .target-price-search input { width: 53px; }
+.target-price-search select { width: 76px; height: 24px; padding: 2px; font-size: 10px; background: #11151d; }

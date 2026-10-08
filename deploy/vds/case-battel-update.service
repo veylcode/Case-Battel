@@ -1,0 +1,12 @@
+[Unit]
+Description=Build and publish Case-Battel updates from GitHub
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=case-deploy
+Group=case-deploy
+ExecStart=/usr/local/bin/case-battel-update
+TimeoutStartSec=20min
+UMask=0022

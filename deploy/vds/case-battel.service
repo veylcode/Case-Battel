@@ -1,0 +1,22 @@
+[Unit]
+Description=Case-Battel game and administration
+After=network.target
+
+[Service]
+Type=simple
+User=case-battel
+Group=case-battel
+WorkingDirectory=/opt/case-battel/current
+EnvironmentFile=/etc/case-battel/runtime.env
+ExecStart=/usr/local/bin/node /opt/case-battel/current/server.mjs
+Restart=on-failure
+RestartSec=3
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/case-battel
+
+[Install]
+WantedBy=multi-user.target

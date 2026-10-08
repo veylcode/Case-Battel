@@ -1,0 +1,35 @@
+# Optional template: copy to .github/workflows after granting workflow access.
+name: Deploy Case-Battel to VDS
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: case-battel-production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npm run build:vds
+      - name: Publish release
+        env:
+          VDS_SSH_KEY: ${{ secrets.VDS_SSH_KEY }}
+          VDS_HOST_KEY: ${{ secrets.VDS_HOST_KEY }}
+          VDS_HOST: ${{ secrets.VDS_HOST }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$VDS_SSH_KEY" > ~/.ssh/case-battel
+          chmod 600 ~/.ssh/case-battel
+          printf '%s\n' "$VDS_HOST_KEY" > ~/.ssh/known_hosts
+          tar -C dist-vds -czf /tmp/case-battel.tar.gz .
+          ssh -i ~/.ssh/case-battel -o BatchMode=yes -o StrictHostKeyChecking=yes "case-deploy@$VDS_HOST" < /tmp/case-battel.tar.gz

@@ -1,0 +1,13 @@
+[Unit]
+Description=Back up Case-Battel database
+
+[Service]
+Type=oneshot
+User=case-battel
+Group=case-battel
+EnvironmentFile=/etc/case-battel/runtime.env
+ExecStart=/usr/local/bin/node /opt/case-battel/current/backup.mjs
+UMask=0077
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/case-battel /var/backups/case-battel

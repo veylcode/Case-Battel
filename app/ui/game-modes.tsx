@@ -3,7 +3,7 @@ import { useLanguage, localizeSkin } from "./language";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Search, Crosshair, ArrowUp, FileSignature, Coins, Swords, Plus, X, Check, RotateCcw, } from "lucide-react";
 import type { Bootstrap, Item, Skin } from "../domain/types";
-import { chanceForUpgrade } from "../domain/rules";
+import { chanceForUpgrade, rarityColors } from "../domain/rules";
 import type { GameAction } from "./game";
 import { SkinCard, Empty, coins, CaseArt, sound } from "./shared";
 import { NeonRing, Roulette } from "./roulette";
@@ -35,6 +35,7 @@ export function Upgrade({ data, act, audio, fast, onAnimating }: ModeProps) {
     const visibleItems = busy ? inventorySnapshot : items;
     const pointer = useRef<HTMLDivElement>(null);
     const used = busy || finished ? snapshot : items.filter((i) => selected.includes(i.uid));
+    const [targetOrder, setTargetOrder] = useState("price");
     const value = used.reduce((sum, i) => sum + i.price, 0) + extra, chance = outcome?.chance ??
         (target
             ? chanceForUpgrade(value, target.price, data.settings.upgradeFee)
@@ -62,10 +63,15 @@ export function Upgrade({ data, act, audio, fast, onAnimating }: ModeProps) {
         (maxPrice === 0 || s.price <= maxPrice) &&
         (rarity === "all" || s.rarity === rarity) &&
         s.name.toLowerCase().includes(query.toLowerCase()))
-        .sort((a, b) => a.price - b.price);
+        .sort((a, b) => targetOrder === "name" ? a.name.localeCompare(b.name) : a.price - b.price);
     function toggle(uid: string) {
-        if (busy || finished)
+        if (busy || !items.some(item => item.uid === uid))
             return;
+        if (finished) {
+            reset();
+            setSelected([uid]);
+            return;
+        }
         setSelected((current) => current.includes(uid)
             ? current.filter((x) => x !== uid)
             : current.length < 6
@@ -134,16 +140,8 @@ export function Upgrade({ data, act, audio, fast, onAnimating }: ModeProps) {
         <div className="upgrade-source">
           <div className="arena-label">{t("Выберите до 6 предметов на апгрейд")}</div>
           {used.length ? (<>
-              <div className="chosen-weapons">
-                {used.slice(0, 3).map((item) => (<img src={lookup.get(item.skinId)?.image} alt={lookup.get(item.skinId)?.name} key={item.uid}/>))}
-              </div>
-              <div className="arena-item-caption">
-                <span>
-                  {used.length === 1
-                ? lookup.get(used[0].skinId)?.name
-                : t(`${used.length} предметов`)}
-                </span>
-                <b>{coins(value)} ©</b>
+              <div className="upgrade-selected-grid">
+                {used.map((item) => (<SkinCard key={item.uid} skin={lookup.get(item.skinId)!} item={item} onClick={() => toggle(item.uid)}/>))}
               </div>
             </>) : (<div className="arena-placeholder">
             </div>)}
@@ -152,8 +150,8 @@ export function Upgrade({ data, act, audio, fast, onAnimating }: ModeProps) {
           <div className="dial-ticks"/>
           <div className="dial-ring" style={{
             background: displayedChance
-                ? `conic-gradient(from ${180 - displayedChance * 1.8}deg,#ffb533 0deg,#ef4144 ${displayedChance * 1.8}deg,#ffb533 ${displayedChance * 3.6}deg,#222c3d ${displayedChance * 3.6}deg)`
-                : "#253045",
+                ? `conic-gradient(from ${180 - displayedChance * 1.8}deg,#71ee12 0deg,#eced00 ${displayedChance * .9}deg,#ff9724 ${displayedChance * 1.35}deg,#f32d30 ${displayedChance * 1.8}deg,#ff9724 ${displayedChance * 2.25}deg,#eced00 ${displayedChance * 2.7}deg,#71ee12 ${displayedChance * 3.6}deg,transparent ${displayedChance * 3.6}deg)`
+                : "transparent",
         }}/>
           <div className="dial-inner">
             <strong className={finished ? (outcome.won ? "positive" : "negative") : ""}>
@@ -168,7 +166,7 @@ export function Upgrade({ data, act, audio, fast, onAnimating }: ModeProps) {
               {finished
             ? outcome.won
                 ? t("Предмет в инвентаре") : t("Попробуйте ещё раз")
-            : target ? t("ШАНС УСПЕХА") : ""}
+            : target ? t(displayedChance >= 70 ? "очень высокий шанс" : displayedChance >= 45 ? "высокий шанс" : displayedChance >= 25 ? "средний шанс" : "низкий шанс") : ""}
             </small>
           </div>
           <div className="dial-pointer" ref={pointer}>
@@ -179,8 +177,8 @@ export function Upgrade({ data, act, audio, fast, onAnimating }: ModeProps) {
           <div className="arena-label">{t("Выберите оружие, которое хотите получить")}</div>
           {target ? (<>
               <img className="target-weapon" src={target.image} alt={localizeSkin(target, language).name}/>
-              <div className="arena-item-caption">
-                <span>{localizeSkin(target, language).name}</span>
+              <div className="arena-item-caption" style={{ borderColor: target.rarityColor ?? rarityColors[target.rarity] }}>
+                <span><small>{localizeSkin(target, language).weapon}</small>{localizeSkin(target, language).skin}</span>
                 <b>{coins(target.price)} ©</b>
               </div>
             </>) : (<div className="arena-placeholder">
@@ -217,7 +215,7 @@ export function Upgrade({ data, act, audio, fast, onAnimating }: ModeProps) {
       <div className="two-panels">
         <div className="collection-panel">
           <h2>
-            <Crosshair size={19}/>{t("МОИ ПРЕДМЕТЫ")}<small>{visibleItems.length}</small>
+            <img src="/reference/ui/kerambit-40.png" alt=""/>{t("Мои предметы")}<small>{visibleItems.length}</small>
           </h2>
           {visibleItems.length ? (<>
               <div className="skin-grid small-grid">
@@ -228,6 +226,7 @@ export function Upgrade({ data, act, audio, fast, onAnimating }: ModeProps) {
         </div>
         <div className="collection-panel">
           <h2 className="target-heading"><span>{t("Выберите предмет")}</span><div className="target-price-search">
+            <select aria-label={t("Сортировка целей")} value={targetOrder} onChange={event => { setTargetOrder(event.target.value); setPage(1); }}><option value="price">{t("Цена")}</option><option value="name">{t("Название")}</option></select>
             <input type="number" aria-label={t("Минимальная цена цели")} min={0} placeholder={t("от")} value={minPrice || ""} onChange={event => { setMinPrice(Number(event.target.value)); setPage(1); }}/>
             <input type="number" aria-label={t("Максимальная цена цели")} min={0} placeholder={t("до")} value={maxPrice || ""} onChange={event => { setMaxPrice(Number(event.target.value)); setPage(1); }}/>
             <button aria-label={t("Поиск цели апгрейда")} onClick={() => setSearchOpen(open => !open)}><Search size={16}/></button>
