@@ -88,6 +88,19 @@ async function handle(request: Request) {
     const settings = await getSettings();
     const playerSession = await session(request);
     const adminSession = await session(request, "admin");
+    if (path === "online") {
+      const cutoff = Date.now() - 45000;
+      if (post) {
+        if (!playerSession) throw new ApiError("Обновите страницу или войдите в аккаунт", 401);
+        await rateLimit(`presence:${playerSession.user_id}`, 30, 60000);
+        await database().prepare("INSERT INTO presence (user_id,seen) VALUES (?,?) ON CONFLICT(user_id) DO UPDATE SET seen=excluded.seen")
+          .bind(playerSession.user_id, Date.now()).run();
+        await database().prepare("DELETE FROM presence WHERE seen < ?").bind(cutoff).run();
+      }
+      const row = await database().prepare("SELECT COUNT(*) AS active FROM presence WHERE seen >= ?")
+        .bind(cutoff).first<{ active: number }>();
+      return response({ online: 5000 + (row?.active ?? 0), active: row?.active ?? 0 });
+    }
     if (path === "profile/avatar" && post) {
       if (!playerSession) throw new ApiError("Войдите в аккаунт", 401);
       const player = await getPlayer(playerSession.user_id);

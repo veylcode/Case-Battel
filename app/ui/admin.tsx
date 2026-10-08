@@ -84,7 +84,7 @@ export default function Admin() {
           <div className="admin-shield">
             <Shield size={35}/>
           </div>
-          <div className="brand">{t("КЕЙС")}<span>◈</span>{t("БАТЛ")}</div>
+          <div className="brand"><img src="/case-battle-logo.png" alt="CASE BATTLE"/></div>
           <LanguageSwitch /><h1>{t("Панель администратора")}</h1>
           <p className="muted">{t("Войдите, чтобы управлять игрой.")}</p>
           <form onSubmit={async (e) => {
@@ -131,7 +131,7 @@ export default function Admin() {
     };
     return (<div className="admin-shell">
       <aside className={`admin-sidebar ${mobileMenu ? "expanded" : ""}`}>
-        <a className="brand" href="/">{t("КЕЙС")}<span>◈</span>{t("БАТЛ")}</a>
+        <a className="brand" href="/"><img src="/case-battle-logo.png" alt="CASE BATTLE"/></a>
         <div className="admin-role">
           <Shield size={15}/>
           {language === "ru" ? "АДМИН-ПАНЕЛЬ" : "ADMIN CONSOLE"}

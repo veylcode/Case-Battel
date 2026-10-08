@@ -20,6 +20,12 @@
 .main-nav button:nth-child(4) img { width: 14px; }
 .account .avatar { width: 43px; height: 43px; background: #fff; border: 2px solid #ed8445; }
 .game-shell .avatar { background-size: cover; background-position: center; background-repeat: no-repeat; }
+.online-counter { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; width: 116px; color: #19bd3e; line-height: 16px; }
+.online-counter strong { font-size: 17px; font-weight: 700; animation: online-update .3s ease-out; }
+.online-counter span { font-size: 8px; color: #d5d9e1; white-space: nowrap; }
+.online-counter svg { height: 17px; color: #0ca878; }
+.brand > img { display: block; width: 125px; height: 40px; object-fit: contain; }
+@keyframes online-update { from { opacity: .45; transform: translateY(2px); } to { opacity: 1; transform: translateY(0); } }
 .avatar-upload { position: relative; cursor: pointer; overflow: hidden; flex-shrink: 0; }
 .avatar-upload input { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; opacity: 0; cursor: pointer; }
 .avatar-upload:hover { box-shadow: 0 0 0 2px #ed844580; }

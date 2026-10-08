@@ -15,6 +15,13 @@
       "when": 1791397581592,
       "tag": "0001_user_avatars",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1791455152294,
+      "tag": "0002_lazy_dust",
+      "breakpoints": true
     }
   ]
 }

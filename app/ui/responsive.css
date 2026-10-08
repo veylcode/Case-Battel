@@ -2,6 +2,10 @@
   .game-shell { --header: 104px; --sidebar: 52px; min-width: 0; }
   .game-shell .topbar { height: var(--header); flex-wrap: wrap; gap: 0; padding: 8px 8px 0; align-content: space-between; }
   .topbar .brand, .topbar .brand img { width: 94px; height: 28px; }
+  .topbar .online-counter { position: absolute; top: 36px; left: 8px; width: 94px; height: 14px; flex-direction: row; gap: 4px; }
+  .online-counter strong { font-size: 11px; line-height: 14px; }
+  .online-counter svg { width: 12px; height: 12px; }
+  .online-counter span { display: none; }
   .topbar .account { gap: 6px; min-width: 0; }
   .account .avatar { width: 30px; height: 30px; }
   .account-label { max-width: 118px; }

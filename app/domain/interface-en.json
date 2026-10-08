@@ -26,7 +26,7 @@
   "Как играть": "How to play",
   "Администратор": "Administrator",
   "Симулятор CS2. Монеты и предметы виртуальные. Пополнение реальными деньгами, вывод и торговля отсутствуют.": "CS2 simulator. Coins and items are virtual. There are no real-money deposits, withdrawals or trades.",
-  "CASE-BATTEL © 2026 · Не связан с Valve, Steam или Яндекс Играми.": "CASE-BATTEL © 2026 · Not affiliated with Valve, Steam or Yandex Games.",
+  "CASE BATTLE © 2026 · Не связан с Valve, Steam или Яндекс Играми.": "CASE BATTLE © 2026 · Not affiliated with Valve, Steam or Yandex Games.",
   "Вы вошли в аккаунт": "You are signed in",
   "Звуки игры": "Game sounds",
   "Быстрые анимации": "Fast animations",
@@ -581,5 +581,7 @@
   "средний шанс": "medium chance",
   "низкий шанс": "low chance",
   "Сортировка целей": "Target sorting",
-  "Мои предметы": "My items"
+  "Мои предметы": "My items",
+  "Пользователей онлайн": "Users online",
+  "CASE BATTLE, главная": "CASE BATTLE, home"
 }

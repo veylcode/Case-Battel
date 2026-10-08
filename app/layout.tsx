@@ -3,9 +3,9 @@ import "./globals.css";
 import { LanguageProvider } from "./ui/language";
 
 export const metadata: Metadata = {
-  title: "КейсБатл • Кейсы, апгрейды и контракты",
+  title: "CASE BATTLE • Кейсы, апгрейды и контракты",
   description:
-    "Открывай кейсы, собирай коллекцию и улучшай предметы в симуляторе КейсБатл.",
+    "Открывай кейсы, собирай коллекцию и улучшай предметы в симуляторе CASE BATTLE.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

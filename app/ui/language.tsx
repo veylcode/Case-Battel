@@ -25,7 +25,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => { if (localStorage.getItem("cb_language") === "en") setLanguage("en"); }, []);
   useEffect(() => {
     document.documentElement.lang = language;
-    document.title = language === "ru" ? "КейсБатл • Кейсы, апгрейды и контракты" : "CaseBattle • Cases, upgrades and contracts";
+    document.title = language === "ru" ? "CASE BATTLE • Кейсы, апгрейды и контракты" : "CASE BATTLE • Cases, upgrades and contracts";
   }, [language]);
   const change = (next: Language) => { localStorage.setItem("cb_language", next); setLanguage(next); };
   return <LanguageContext.Provider value={{ language, setLanguage: change, t: (value) => translate(value, language) }}>{children}</LanguageContext.Provider>;

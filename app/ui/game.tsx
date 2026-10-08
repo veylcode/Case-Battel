@@ -8,6 +8,7 @@ import { api, coins, saleCoins, CaseArt, SkinCard, Modal, Empty, sound } from ".
 import { NeonRing, Roulette } from "./roulette";
 import { Inventory, Rewards, Leaderboard, Support, HistoryPanel, } from "./player-panels";
 import { Upgrade, Contract, Battle } from "./game-modes";
+import { OnlineCounter } from "./online";
 type View = "cases" | "inventory" | "upgrade" | "contract" | "battle" | "farm" | "leaderboard" | "history" | "support";
 export type GameAction = (path: string, body?: unknown) => Promise<any>;
 const navigation: {
@@ -166,7 +167,7 @@ export default function Game() {
     if (!data)
         return (<div className="startup">
         <div className="brand">
-          <img src="/case-battle-logo.svg" alt={t("КейсБатл")}/>
+          <img src="/case-battle-logo.png" alt="CASE BATTLE"/>
         </div>
         <div className="loader"/>
         <p>{t(error) || t("Загружаем коллекцию…")}</p>
@@ -189,8 +190,8 @@ export default function Game() {
     };
     return (<div className={`game-shell ${fast ? "fast-mode" : ""}`} style={{ zoom: viewportScale, width: viewportScale < 1 ? 1280 : undefined }}>
       <header className="topbar">
-        <button className="brand" onClick={() => navigate("cases")} aria-label={t("КейсБатл, главная")}>
-          <img src="/case-battle-logo.svg" alt={t("КейсБатл")}/>
+        <button className="brand" onClick={() => navigate("cases")} aria-label={t("CASE BATTLE, главная")}>
+          <img src="/case-battle-logo.png" alt="CASE BATTLE"/>
         </button>
         <nav className="main-nav">
           {navigation.map(({ id, label, icon: Icon }) => (<button key={id} className={view === id ? "active" : ""} disabled={animating} onClick={() => navigate(id)}>
@@ -198,6 +199,7 @@ export default function Game() {
               <span>{t(label)}</span>
             </button>))}
         </nav>
+        <OnlineCounter playerId={data.player.id}/>
         <div className="account"><LanguageSwitch />
           <button className="avatar" style={data.player.avatar ? { backgroundImage: `url(${data.player.avatar})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined} aria-label={t("Мой профиль")} onClick={() => navigate("inventory")}>
           </button>
@@ -252,7 +254,7 @@ export default function Game() {
         <footer className="footer">
           <div className="footer-top">
             <div className="brand">
-              CASE<span>◈</span>BATTEL
+              <img src="/case-battle-logo.png" alt="CASE BATTLE"/>
             </div>
             <div>
               <button onClick={() => navigate("leaderboard")}>
@@ -268,7 +270,7 @@ export default function Game() {
             </div>
           </div>
           <p>{t("Симулятор CS2. Монеты и предметы виртуальные. Пополнение реальными деньгами, вывод и торговля отсутствуют.")}</p>
-          <small>{t("CASE-BATTEL \u00A9 2026 \u00B7 Не связан с Valve, Steam или Яндекс Играми.")}</small>
+          <small>{t("CASE BATTLE \u00A9 2026 \u00B7 Не связан с Valve, Steam или Яндекс Играми.")}</small>
         </footer>
       </main>
       {toast && (<div className="toast" role="status">
