@@ -4,15 +4,29 @@ import { useEffect, useRef, type ReactNode } from "react";
 import { X, Lock, Check, Box } from "lucide-react";
 import { rarityColors } from "../domain/rules";
 import type { Skin, Case, Item } from "../domain/types";
+import { apiOrigin, hostedImages } from "./hosting";
 export const coins = (value: number) => new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 2 }).format(value);
 export const saleCoins = (value: number) => new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 }).format(value);
 export async function api<T = any>(path: string, body?: unknown): Promise<T> {
-    const response = await fetch(`/api/${path}`, {
+    const headers: Record<string, string> = body === undefined ? {} : { "Content-Type": "application/json" };
+    if (apiOrigin) {
+        const player = localStorage.getItem("cb_player_session"), admin = sessionStorage.getItem("cb_admin_session");
+        if (player) headers["X-CB-Player"] = player;
+        if (admin) headers["X-CB-Admin"] = admin;
+    }
+    const response = await fetch(`${apiOrigin}/api/${path}`, {
         method: body === undefined ? "GET" : "POST",
-        headers: body === undefined ? {} : { "Content-Type": "application/json" },
+        headers,
+        ...(apiOrigin ? { credentials: "omit" as const } : {}),
         body: body === undefined ? undefined : JSON.stringify(body),
     });
-    const data = (await response.json()) as {
+    if (apiOrigin) {
+        for (const [header, storage, key] of [["X-CB-Player-Session", localStorage, "cb_player_session"], ["X-CB-Admin-Session", sessionStorage, "cb_admin_session"]] as const) {
+            const token = response.headers.get(header);
+            if (token !== null) { if (token) storage.setItem(key, token); else storage.removeItem(key); }
+        }
+    }
+    const data = hostedImages(await response.json()) as {
         error?: string;
     } & T;
     if (!response.ok)

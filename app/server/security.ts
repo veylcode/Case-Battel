@@ -56,7 +56,10 @@ export function cookie(request: Request, name: string) {
   );
 }
 export async function session(request: Request, role = "player") {
-  const token = cookie(request, role === "admin" ? "cb_admin" : "cb_session");
+  const frontend = (env as unknown as { FRONTEND_ORIGIN?: string }).FRONTEND_ORIGIN;
+  const fromFrontend = frontend && request.headers.get("origin") === frontend;
+  const token = (fromFrontend ? request.headers.get(role === "admin" ? "X-CB-Admin" : "X-CB-Player") : null)
+    || cookie(request, role === "admin" ? "cb_admin" : "cb_session");
   if (!token) return null;
   return database()
     .prepare(
@@ -82,7 +85,7 @@ export async function createSession(
 }
 export function assertOrigin(request: Request) {
   const origin = request.headers.get("origin");
-  if (origin && origin !== new URL(request.url).origin)
+  if (origin && origin !== new URL(request.url).origin && origin !== (env as unknown as { FRONTEND_ORIGIN?: string }).FRONTEND_ORIGIN)
     throw new ApiError("Запрос с другого сайта запрещён", 403);
 }
 export class ApiError extends Error {

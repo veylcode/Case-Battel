@@ -5,7 +5,7 @@ import { stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { GET, POST } from '../../app/api/[...path]/route.ts';
-import { sqlite } from './database.mjs';
+import { sqlite, env } from './database.mjs';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), 'client');
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.png': 'image/png', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.ttf': 'font/ttf', '.m4a': 'audio/mp4', '.ico': 'image/x-icon' };
@@ -15,6 +15,15 @@ const server = http.createServer(async (incoming, outgoing) => {
     const protocol = trustedProxy && incoming.headers['x-forwarded-proto'] === 'https' ? 'https' : 'http';
     const url = new URL(incoming.url, `${protocol}://${incoming.headers.host}`);
     if (url.pathname.startsWith('/api/')) {
+      const frontend = incoming.headers.origin === env.FRONTEND_ORIGIN;
+      const cors = frontend ? {
+        'Access-Control-Allow-Origin': env.FRONTEND_ORIGIN,
+        'Access-Control-Allow-Methods': 'GET, POST',
+        'Access-Control-Allow-Headers': 'Content-Type, X-CB-Player, X-CB-Admin',
+        'Access-Control-Expose-Headers': 'X-CB-Player-Session, X-CB-Admin-Session',
+        'Vary': 'Origin',
+      } : {};
+      if (incoming.method === 'OPTIONS') { outgoing.writeHead(frontend ? 204 : 403, cors).end(); return; }
       if (!['GET', 'POST'].includes(incoming.method)) {
         outgoing.writeHead(405, { Allow: 'GET, POST' }).end();
         return;
@@ -37,7 +46,13 @@ const server = http.createServer(async (incoming, outgoing) => {
       else headers.set('cf-connecting-ip', String(incoming.headers['x-real-ip'] ?? incoming.socket.remoteAddress));
       const request = new Request(url, { method: incoming.method, headers, ...(incoming.method === 'POST' ? { body: Buffer.concat(chunks) } : {}) });
       const response = await (incoming.method === 'POST' ? POST : GET)(request);
-      const responseHeaders = Object.fromEntries(response.headers);
+      const responseHeaders = { ...Object.fromEntries(response.headers), ...cors };
+      if (frontend) {
+        for (const value of response.headers.getSetCookie()) {
+          const match = /^(cb_session|cb_admin)=([^;]*)/.exec(value);
+          if (match) responseHeaders[match[1] === 'cb_admin' ? 'X-CB-Admin-Session' : 'X-CB-Player-Session'] = match[2];
+        }
+      }
       if (response.headers.getSetCookie().length) responseHeaders['set-cookie'] = response.headers.getSetCookie();
       outgoing.writeHead(response.status, responseHeaders);
       if (response.body) Readable.fromWeb(response.body).pipe(outgoing);

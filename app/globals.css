@@ -285,6 +285,8 @@ a svg {
   outline-offset: 2px;
 }
 .modal {
+  margin: auto;
+  overflow-y: auto;
   width: min(490px, calc(100vw - 26px));
   border: 1px solid #394457;
   background: #171e2b;

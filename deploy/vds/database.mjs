@@ -41,4 +41,5 @@ export const env = {
   DB: { prepare },
   ADMIN_LOGIN: process.env.ADMIN_LOGIN,
   ADMIN_HASH: process.env.ADMIN_HASH,
+  FRONTEND_ORIGIN: 'https://veylcode.github.io',
 };
