@@ -1,0 +1,128 @@
+[
+  {
+    "name": "Background",
+    "pathId": 6,
+    "type": "Texture2D",
+    "width": 32,
+    "height": 32,
+    "image": "/reference/ui/Background-6.png"
+  },
+  {
+    "name": "InputFieldBackground",
+    "pathId": 7,
+    "type": "Texture2D",
+    "width": 32,
+    "height": 32,
+    "image": "/reference/ui/InputFieldBackground-7.png"
+  },
+  {
+    "name": "DropdownArrow",
+    "pathId": 9,
+    "type": "Texture2D",
+    "width": 64,
+    "height": 64,
+    "image": "/reference/ui/DropdownArrow-9.png"
+  },
+  {
+    "name": "Background",
+    "pathId": 30,
+    "type": "Sprite",
+    "image": "/reference/ui/Background-30.png"
+  },
+  {
+    "name": "InputFieldBackground",
+    "pathId": 31,
+    "type": "Sprite",
+    "image": "/reference/ui/InputFieldBackground-31.png"
+  },
+  {
+    "name": "DropdownArrow",
+    "pathId": 33,
+    "type": "Sprite",
+    "image": "/reference/ui/DropdownArrow-33.png"
+  },
+  {
+    "name": "bg_circle2",
+    "pathId": 38,
+    "type": "Sprite",
+    "image": "/reference/ui/bg_circle2-38.png"
+  },
+  {
+    "name": "arrow-4",
+    "pathId": 82,
+    "type": "Sprite",
+    "image": "/reference/ui/arrow-4-82.png"
+  },
+  {
+    "name": "contractTop",
+    "pathId": 98,
+    "type": "Sprite",
+    "image": "/reference/ui/contractTop-98.png"
+  },
+  {
+    "name": "arrow-3",
+    "pathId": 106,
+    "type": "Sprite",
+    "image": "/reference/ui/arrow-3-106.png"
+  },
+  {
+    "name": "arrow-2",
+    "pathId": 109,
+    "type": "Sprite",
+    "image": "/reference/ui/arrow-2-109.png"
+  },
+  {
+    "name": "csgo-man-circle",
+    "pathId": 125,
+    "type": "Sprite",
+    "image": "/reference/ui/csgo-man-circle-125.png"
+  },
+  {
+    "name": "arrow-1",
+    "pathId": 138,
+    "type": "Sprite",
+    "image": "/reference/ui/arrow-1-138.png"
+  },
+  {
+    "name": "contract",
+    "pathId": 145,
+    "type": "Sprite",
+    "image": "/reference/ui/contract-145.png"
+  },
+  {
+    "name": "case-category-bg",
+    "pathId": 174,
+    "type": "Sprite",
+    "image": "/reference/ui/case-category-bg-174.png"
+  },
+  {
+    "name": "Circle",
+    "pathId": 253,
+    "type": "Sprite",
+    "image": "/reference/ui/Circle-253.png"
+  },
+  {
+    "name": "arrow-5",
+    "pathId": 259,
+    "type": "Sprite",
+    "image": "/reference/ui/arrow-5-259.png"
+  },
+  {
+    "name": "upgradeWhite",
+    "pathId": 260,
+    "type": "Sprite",
+    "image": "/reference/ui/upgradeWhite-260.png"
+  },
+  {
+    "name": "case-circle",
+    "pathId": 265,
+    "type": "Sprite",
+    "image": "/reference/ui/case-circle-265.png"
+  },
+  {
+    "name": "bg_circle",
+    "pathId": 271,
+    "type": "Sprite",
+    "image": "/reference/ui/bg_circle-271.png"
+  }
+]
