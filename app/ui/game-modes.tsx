@@ -32,10 +32,9 @@ export function Upgrade({ data, act, audio, fast, onAnimating }: ModeProps) {
     const { lookup, items } = useInventory(data);
     const [selected, setSelected] = useState<string[]>(() => initialSelection(items)), [target, setTarget] = useState<Skin | null>(null), [extra, setExtra] = useState(0), [query, setQuery] = useState(""), [rarity, setRarity] = useState("all"), [minPrice, setMinPrice] = useState(0), [maxPrice, setMaxPrice] = useState(0), [searchOpen, setSearchOpen] = useState(false), [page, setPage] = useState(1), [inventoryPage, setInventoryPage] = useState(1);
     const [busy, setBusy] = useState(false), [outcome, setOutcome] = useState<any>(null), [finished, setFinished] = useState(false), [snapshot, setSnapshot] = useState<Item[]>([]), [inventorySnapshot, setInventorySnapshot] = useState<Item[]>([]);
-    const visibleItems = busy ? inventorySnapshot : items;
+    const visibleItems = [...(busy ? inventorySnapshot : items)].sort((a, b) => a.price - b.price || a.acquired - b.acquired);
     const pointer = useRef<HTMLDivElement>(null);
     const used = busy || finished ? snapshot : items.filter((i) => selected.includes(i.uid));
-    const [targetOrder, setTargetOrder] = useState("price");
     const value = used.reduce((sum, i) => sum + i.price, 0) + extra, chance = outcome?.chance ??
         (target
             ? chanceForUpgrade(value, target.price, data.settings.upgradeFee, data.player.state.odds?.upgradeBonus)
@@ -63,7 +62,7 @@ export function Upgrade({ data, act, audio, fast, onAnimating }: ModeProps) {
         (maxPrice === 0 || s.price <= maxPrice) &&
         (rarity === "all" || s.rarity === rarity) &&
         s.name.toLowerCase().includes(query.toLowerCase()))
-        .sort((a, b) => targetOrder === "name" ? a.name.localeCompare(b.name) : a.price - b.price);
+        .sort((a, b) => a.price - b.price || a.name.localeCompare(b.name));
     function toggle(uid: string) {
         if (busy || !items.some(item => item.uid === uid))
             return;
@@ -226,7 +225,7 @@ export function Upgrade({ data, act, audio, fast, onAnimating }: ModeProps) {
         </div>
         <div className="collection-panel">
           <h2 className="target-heading"><span>{t("Выберите предмет")}</span><div className="target-price-search">
-            <select aria-label={t("Сортировка целей")} value={targetOrder} onChange={event => { setTargetOrder(event.target.value); setPage(1); }}><option value="price">{t("Цена")}</option><option value="name">{t("Название")}</option></select>
+            <span className="target-sort-label">{t("Цена ↑")}</span>
             <input type="number" aria-label={t("Минимальная цена цели")} min={0} placeholder={t("от")} value={minPrice || ""} onChange={event => { setMinPrice(Number(event.target.value)); setPage(1); }}/>
             <input type="number" aria-label={t("Максимальная цена цели")} min={0} placeholder={t("до")} value={maxPrice || ""} onChange={event => { setMaxPrice(Number(event.target.value)); setPage(1); }}/>
             <button aria-label={t("Поиск цели апгрейда")} onClick={() => setSearchOpen(open => !open)}><Search size={16}/></button>

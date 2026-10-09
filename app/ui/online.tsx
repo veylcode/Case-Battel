@@ -20,7 +20,7 @@ export function OnlineCounter({ playerId }: { playerId: string }) {
       finally { pending = false; }
     }
     void refresh();
-    const timer = setInterval(refresh, 10000);
+    const timer = setInterval(refresh, 5000);
     document.addEventListener("visibilitychange", refresh);
     return () => {
       mounted = false;

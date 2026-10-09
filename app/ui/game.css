@@ -1793,6 +1793,15 @@
 }
 
 .farm-page { width: 800px; max-width: 100%; padding-top: 26px; }
+.farm-status { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; width: 400px; max-width: 100%; margin: 0 0 12px 109px; color: #e4ab52; font-size: 13px; }
+.farm-upgrade-panel { margin-top: 28px; padding: 18px; }
+.farm-upgrade-panel h2 { height: auto; margin-bottom: 12px; }
+.farm-upgrade-panel p { line-height: 1.6; margin: 12px 0; }
+.farm-upgrade-panel .skin-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.farm-upgrade-panel progress { width: 100%; height: 10px; accent-color: #efa74b; }
+.farm-progress, .farm-upgrade-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: space-between; align-items: center; margin: 15px 0; }
+.target-sort-label { color: #a7adba; font-size: 11px; white-space: nowrap; }
+@media (max-width: 760px) { .farm-status { margin-inline: auto; } .farm-upgrade-panel { padding: 12px; } .farm-upgrade-actions .primary { width: 100%; } }
 .farm-page h1 { width: 400px; max-width: 100%; margin: 22px 0 17px 109px; }
 .farm-hold { display: block; position: relative; overflow: hidden; width: 400px; max-width: 100%; height: 266px; margin-left: 109px; border: 5px solid transparent; border-image: linear-gradient(100deg, #e3ae29, #f32808) 1; background: #3c3c3c; color: #8d8d8d; font-size: 12px; user-select: none; touch-action: none; }
 .farm-hold i { position: absolute; top: 50%; color: #dfb362; font-size: 13px; font-style: normal; animation: farm-rise 1.1s linear forwards; pointer-events: none; }

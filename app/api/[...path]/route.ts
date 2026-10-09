@@ -7,6 +7,7 @@ import {
   defaults,
 } from "../../domain/catalog";
 import type { Case, Settings, PlayerState, PlayerOdds, Rarity } from "../../domain/types";
+import { farmRate, farmProgress, maxFarmInvestment, maxFarmLevel } from "../../domain/farm";
 import {
   database,
   session,
@@ -39,6 +40,7 @@ import {
 
 export const dynamic = "force-dynamic";
 const random = () => crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296;
+let simulatedOnline = 250 + Math.floor(random() * 200), onlineUpdatedAt = 0;
 function selectDrop(box: Case, settings: Settings, odds?: PlayerOdds) {
   const pool = contents(box, settings, odds);
   const total = pool.reduce((sum, x) => sum + x.weight, 0);
@@ -99,7 +101,11 @@ async function handle(request: Request) {
       }
       const row = await database().prepare("SELECT COUNT(*) AS active FROM presence WHERE seen >= ?")
         .bind(cutoff).first<{ active: number }>();
-      return response({ online: 5000 + (row?.active ?? 0), active: row?.active ?? 0 });
+      if (Date.now() - onlineUpdatedAt >= 5000) {
+        simulatedOnline = Math.max(50, Math.min(950, simulatedOnline + (random() < .5 ? -1 : 1) * (2 + Math.floor(random() * 17))));
+        onlineUpdatedAt = Date.now();
+      }
+      return response({ online: 5000 + simulatedOnline + (row?.active ?? 0), active: row?.active ?? 0 });
     }
     if (path === "profile/avatar" && post) {
       if (!playerSession) throw new ApiError("Войдите в аккаунт", 401);
@@ -634,6 +640,21 @@ async function handle(request: Request) {
         history(state, "bonus", "Ежедневный бонус", settings.dailyBonus);
         return { amount: settings.dailyBonus };
       }
+      if (path === "farm/upgrade") {
+        if (state.farmHoldAt && Date.now() - state.farmHoldAt < 3000) throw new ApiError("Отпустите фармилку перед прокачкой");
+        if (farmProgress(state.farmInvestment).level >= maxFarmLevel) throw new ApiError("Фармилка уже прокачана до максимума");
+        const used = takeItems(state, body.ids, 1, 100);
+        const value = used.reduce((sum, item) => sum + item.price, 0);
+        if (value <= 0) throw new ApiError("Выберите предметы с положительной стоимостью");
+        const investment = state.farmInvestment ?? 0;
+        const credited = Math.min(value, maxFarmInvestment - investment);
+        const refund = Math.round((value - credited) * 100) / 100;
+        state.farmInvestment = Math.round((investment + credited) * 100) / 100;
+        state.balance += refund;
+        delete state.farmHoldAt;
+        history(state, "farm-upgrade", "Прокачка фармилки скинами", refund, used.map(item => item.skinId));
+        return { ...farmProgress(state.farmInvestment), credited, refund };
+      }
       if (path === "farm/start") {
         state.farmHoldAt = Date.now();
         return { amount: 0 };
@@ -643,7 +664,7 @@ async function handle(request: Request) {
         if (!state.farmHoldAt) throw new ApiError("Начните удержание");
         const elapsed = now - state.farmHoldAt;
         state.farmHoldAt = now;
-        const amount = elapsed > 3000 ? 0 : Math.round(Math.min(elapsed, 1500) * settings.farmReward * .8 / 1000 * 100) / 100;
+        const amount = elapsed > 3000 ? 0 : Math.round(Math.min(elapsed, 1500) * farmRate(settings.farmReward, state.farmInvestment) / 1000 * 100) / 100;
         state.balance += amount;
         if (body.stop) delete state.farmHoldAt;
         return { amount };
@@ -652,9 +673,10 @@ async function handle(request: Request) {
         if (Date.now() - state.farmAt < settings.farmCooldown * 1000)
           throw new ApiError("Дождитесь окончания таймера");
         state.farmAt = Date.now();
-        state.balance += settings.farmReward;
-        history(state, "farm", "Фармилка", settings.farmReward);
-        return { amount: settings.farmReward };
+        const amount = Math.round(settings.farmReward * farmProgress(state.farmInvestment).multiplier * 100) / 100;
+        state.balance += amount;
+        history(state, "farm", "Фармилка", amount);
+        return { amount };
       }
       if (path === "promo") {
         const code = textValue(body.code, 2, 32).toUpperCase();

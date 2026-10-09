@@ -3,6 +3,7 @@ import caseData from "./case-catalog.json";
 import dropData from "./case-content.json";
 import type { Skin, Case, Settings, CaseContent, PlayerOdds } from "./types";
 import { personalWeight } from "./rules";
+import { balancedCaseWeights } from "./case-odds";
 export { rarityColors, chanceForUpgrade } from "./rules";
 
 export const skins = (skinData as Skin[]).filter((s) => !s.supplemental);
@@ -72,7 +73,7 @@ export function configuredCases(settings: Settings): Case[] {
 }
 export function contents(box: Case, settings: Settings, odds?: PlayerOdds): CaseContent[] {
   const entries = originalDrops[box.id] ?? originalDrops[cases[0].id] ?? [];
-  const combined = new Map<string, { skin: Skin; weight: number }>();
+  const combined = new Map<string, { skin: Skin; copies: number }>();
   for (const entry of entries) {
     const source = skinLookup.get(entry.skinId);
     if (!source) continue;
@@ -80,20 +81,14 @@ export function contents(box: Case, settings: Settings, odds?: PlayerOdds): Case
       ...source,
       price: settings.skinPrices[source.id] ?? entry.price,
     };
-    const weight =
-      settings.odds[box.id]?.[skin.id] ??
-      Math.max(
-        0.001,
-        Math.pow(Math.max(box.price, 10) / Math.max(skin.price, 0.01), 1.8),
-      );
     const existing = combined.get(skin.id);
-    if (existing) {
-      if (settings.odds[box.id]?.[skin.id] === undefined)
-        existing.weight += weight;
-    } else combined.set(skin.id, { skin, weight });
+    if (existing) existing.copies++;
+    else combined.set(skin.id, { skin, copies: 1 });
   }
-  const weighted = Array.from(combined.values()).map(entry => ({ ...entry,
-    weight: personalWeight(entry.weight, entry.skin.price, entry.skin.rarity, box.price, odds),
+  const unique = Array.from(combined.values());
+  const baseWeights = balancedCaseWeights(unique.map(entry => ({ price: entry.skin.price, copies: entry.copies })), box.price);
+  const weighted = unique.map((entry, index) => ({ skin: entry.skin,
+    weight: personalWeight(settings.odds[box.id]?.[entry.skin.id] ?? baseWeights[index], entry.skin.price, entry.skin.rarity, box.price, odds),
   }));
   const total = weighted.reduce((sum, x) => sum + x.weight, 0);
   return weighted.map((x) => ({ ...x, chance: (100 * x.weight) / total }));

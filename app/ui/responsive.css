@@ -1,5 +1,6 @@
 @media (max-width: 760px) {
-  .game-shell { --header: 104px; --sidebar: 52px; min-width: 0; }
+  .game-shell { --header: 104px; --sidebar: 0px; min-width: 0; }
+  .game-shell .drop-sidebar { display: none; }
   .game-shell .topbar { height: var(--header); flex-wrap: wrap; gap: 0; padding: 8px 8px 0; align-content: space-between; }
   .topbar .brand, .topbar .brand img { width: 94px; height: 28px; }
   .topbar .online-counter { position: absolute; top: 36px; left: 8px; width: 94px; height: 14px; flex-direction: row; gap: 4px; }

@@ -57,6 +57,7 @@ export interface PlayerState {
   bonusAt: number;
   farmAt: number;
   farmHoldAt?: number;
+  farmInvestment?: number;
   freeAt?: number;
   promoCodes: string[];
   achievements: string[];

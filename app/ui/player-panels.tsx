@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Search, Coins, Lock, Gift, Clock, Trophy, Send, Check, User, TrendingUp, Box, FileSignature, Crosshair, Zap, } from "lucide-react";
 import type { Bootstrap, Player, Skin } from "../domain/types";
 import type { GameAction } from "./game";
+import { farmProgress, farmRate, maxFarmLevel, maxFarmInvestment } from "../domain/farm";
 import { api, coins, saleCoins, SkinCard, Empty, Modal, sound } from "./shared";
 export function Inventory({ data, act, pending, notify, }: {
     data: Bootstrap;
@@ -218,6 +219,14 @@ export function Rewards({ data, act, notify, pending, onBalancePreview }: {
 }) {
     const { t, language } = useLanguage();
     const [holding, setHolding] = useState(false);
+    const [selected, setSelected] = useState<string[]>([]), [confirmUpgrade, setConfirmUpgrade] = useState(false), [itemLimit, setItemLimit] = useState(60);
+    const investment = data.player.state.farmInvestment ?? 0;
+    const progress = farmProgress(investment), rate = farmRate(data.settings.farmReward, investment);
+    const lookup = useMemo(() => new Map(data.skins.map(skin => [skin.id, skin])), [data.skins]);
+    const upgradeItems = data.player.state.inventory.filter(item => !item.locked && item.price > 0).sort((a, b) => a.price - b.price);
+    const selectedItems = upgradeItems.filter(item => selected.includes(item.uid));
+    const selectedValue = selectedItems.reduce((sum, item) => sum + item.price, 0);
+    const preview = farmProgress(Math.min(maxFarmInvestment, investment + selectedValue));
     const [particles, setParticles] = useState<{
         id: number;
         amount: number;
@@ -272,13 +281,13 @@ export function Rewards({ data, act, notify, pending, onBalancePreview }: {
         const animation = setInterval(() => {
             const now = Date.now();
             if (clock.current)
-                onBalancePreview(clock.current.balance + Math.min(1500, now - clock.current.at) * data.settings.farmReward * .8 / 1000);
+                onBalancePreview(clock.current.balance + Math.min(1500, now - clock.current.at) * rate / 1000);
             setParticles(current => [...current.filter(p => p.id > now - 1100), {
-                    id: now, amount: data.settings.farmReward * .8 / 20, x: Math.random() * 50 - 25,
+                    id: now, amount: rate / 20, x: Math.random() * 50 - 25,
                 }]);
         }, 50);
         return () => { clearInterval(credit); clearInterval(animation); };
-    }, [holding, data.settings.farmReward]);
+    }, [holding, rate]);
     useEffect(() => {
         const release = () => { if (document.hidden)
             stop(); };
@@ -292,6 +301,7 @@ export function Rewards({ data, act, notify, pending, onBalancePreview }: {
     }, []);
     return <section className="farm-page">
     <h1>{t("ФАРМИЛКА ДЕНЕГ")}</h1>
+    <div className="farm-status"><span>{t("Уровень")} {progress.level}/{maxFarmLevel}</span><strong>{coins(rate)} ©/{t("сек")}</strong><span>+{Math.round((progress.multiplier - 1) * 100)}%</span></div>
     <button className={`farm-hold ${holding ? "holding" : ""}`} aria-label={t("Удерживай, чтобы зарабатывать")} onPointerDown={event => { event.currentTarget.setPointerCapture(event.pointerId); start(); }} onPointerUp={stop} onPointerCancel={stop} onLostPointerCapture={stop} onKeyDown={event => { if (event.key === " " || event.key === "Enter") {
         event.preventDefault();
         start();
@@ -307,6 +317,30 @@ export function Rewards({ data, act, notify, pending, onBalancePreview }: {
       <img src="/reference/ui/coins-64.png" alt=""/>
       <span>+{coins(data.settings.dailyBonus)} ©<small>{t("Получить бонус")}</small></span>
     </button>
+    <div className="farm-upgrade-panel collection-panel">
+      <h2>{t("Прокачка фармилки скинами")}</h2>
+      <p>{t("Каждый уровень даёт +5% к заработку. Максимум — +50%. Стоимость следующего уровня удваивается.")}</p>
+      {progress.level < maxFarmLevel ? <>
+        <div className="farm-progress"><span>{t("До следующего уровня")}: {coins(progress.nextCost - progress.progress)} ©</span><small>{coins(progress.progress)} / {coins(progress.nextCost)} ©</small></div>
+        <progress aria-label={t("Прогресс фармилки")} value={progress.progress} max={progress.nextCost}/>
+        <p className="muted">{t("Переданные скины расходуются навсегда. Их стоимость накапливается для прокачки; излишек сверх максимума вернётся на баланс. Дневной бонус не увеличивается.")}</p>
+        {upgradeItems.length ? <div className="skin-grid small-grid">{upgradeItems.slice(0, itemLimit).map(item => <SkinCard key={item.uid} skin={lookup.get(item.skinId)!} item={item} selected={selected.includes(item.uid)} onClick={() => { if (!holding && !pending) setSelected(current => current.includes(item.uid) ? current.filter(id => id !== item.uid) : current.length < 100 ? [...current, item.uid] : current); }}/>)}</div> : <Empty title={t("Нет предметов")} description={t("Откройте кейс, чтобы начать прокачку.")}/>}
+        {upgradeItems.length > itemLimit && <button className="secondary load-more" onClick={() => setItemLimit(current => current + 60)}>{t("Ещё предметы")}</button>}
+        <div className="farm-upgrade-actions"><span>{t("Выбрано")}: {selectedItems.length} · {coins(selectedValue)} ©</span><button className="primary" disabled={holding || pending || !selectedItems.length} onClick={() => setConfirmUpgrade(true)}>{t("ПРОКАЧАТЬ ФАРМИЛКУ")}</button></div>
+      </> : <p className="positive">{t("Максимальный уровень достигнут")}</p>}
+    </div>
+    {confirmUpgrade && <Modal title={t("Прокачка фармилки скинами")} onClose={() => { if (!pending) setConfirmUpgrade(false); }}>
+      <p>{t("Предметы будут израсходованы")}: {selectedItems.length} · {coins(selectedValue)} ©.</p>
+      <p>{t("Уровень")}: {progress.level} → {preview.level}. {t("Бонус")}: +{Math.round((preview.multiplier - 1) * 100)}%.</p>
+      <p>{t("Вклад сохраняется, даже если до следующего уровня пока не хватает.")}</p>
+      <button className="primary wide" disabled={pending || !selectedItems.length} onClick={async () => {
+        try {
+          const response = await act("farm/upgrade", { ids: selectedItems.map(item => item.uid) });
+          setSelected([]); setConfirmUpgrade(false);
+          notify(`${t("Фармилка прокачана")}: ${t("Уровень")} ${response.result.level}`);
+        } catch { }
+      }}>{t("Подтвердить прокачку")}</button>
+    </Modal>}
   </section>;
 }
 export function HistoryPanel({ player, skins, }: {
